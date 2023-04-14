@@ -6,4 +6,4 @@ It has 2 functionalities:
 * extracts from the above created file the image corresponding to the selected description
 
 ## Install
-Using Visual Studio, open the repositories solution file and build the solution.
+Using Visual Studio, open the repository's solution file and build the solution.
