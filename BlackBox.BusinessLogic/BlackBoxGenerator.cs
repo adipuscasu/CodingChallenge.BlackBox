@@ -41,7 +41,7 @@ namespace CodingChallenge.BlackBox
             catch (Exception ex)
             {
                 Console.WriteLine($"Error {ex.Message}");
-                // deal with error
+                // deal with error in UI
                 throw;
             }
 

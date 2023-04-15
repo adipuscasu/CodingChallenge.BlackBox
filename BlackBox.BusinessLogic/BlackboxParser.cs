@@ -1,6 +1,5 @@
 ﻿using BlackBox.BusinessLogic.Extensions;
 using System.Text;
-using System.Linq;
 
 namespace BlackBox.BusinessLogic
 {
@@ -57,7 +56,7 @@ namespace BlackBox.BusinessLogic
                     File.Delete(outputPath);
                 }
 
-                // create a StreamWriter object to write to the output file
+                // create a BinaryWriter object to write to the output file
                 using (var stream = File.Open(outputPath, FileMode.Create))
                 {
                     using (var writer = new BinaryWriter(stream, Encoding.Default, false))
@@ -73,7 +72,7 @@ namespace BlackBox.BusinessLogic
             catch (Exception ex)
             {
                 Console.WriteLine($"Error {ex.Message}");
-                // deal with error
+                // deal with error in UI
                 throw;
             }
         }
@@ -89,6 +88,7 @@ namespace BlackBox.BusinessLogic
 
             list.AddRange(from string key in _blackBox.Keys
                           select key);
+
             return list;
         }
 
@@ -129,25 +129,27 @@ namespace BlackBox.BusinessLogic
                         }
                         int imageEndIndex = i + 1;
                         byte[] imageData = new byte[imageEndIndex - imageStartIndex + 1];
+
                         Array.Copy(buffer, imageStartIndex, imageData, 0, imageData.Length);
 
-                        bool keyExists = _blackBox.TryGetValue(description, out _);
-                        if (keyExists)
-                        {
-                            description = description.AppendRandomStringSuffix();
-                        }
-
-                        bool wasAdded = _blackBox.TryAdd(description, imageData);
-
-                        if (!wasAdded)
-                        {
-                            throw new ApplicationException($"Could not add key {description}");
-                        }
+                        AddToDictionary(description, imageData);
                     }
                 }
-                //while ((bytesRead = fs.Read(buffer, 0, buffer.Length)) > 0)
-                //{
-                //}
+            }
+        }
+
+        private void AddToDictionary(string description, byte[] imageData)
+        {
+            bool keyExists = _blackBox.TryGetValue(description, out _);
+            if (keyExists)
+            {
+                description = description.AppendRandomStringSuffix();
+            }
+
+            bool wasAdded = _blackBox.TryAdd(description, imageData);
+            if (!wasAdded)
+            {
+                throw new ApplicationException($"Could not add key {description}");
             }
         }
     }

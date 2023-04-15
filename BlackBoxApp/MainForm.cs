@@ -1,11 +1,6 @@
 using BlackBox.BusinessLogic;
 using CodingChallenge.BlackBox;
-using System.ComponentModel;
-using System.IO;
 using System.Security;
-using System.Windows.Forms;
-using System.Xml;
-using static System.Net.Mime.MediaTypeNames;
 
 namespace BlackBoxApp
 {
@@ -27,7 +22,7 @@ namespace BlackBoxApp
             {
                 try
                 {
-                    textBox1.Text = RemoveFileNameExtension(openFileDialog1.FileName);
+                    textBoxDescription.Text = RemoveFileNameExtension(openFileDialog1.FileName);
                     lblSelectedFile.Text = "Selected file: " + openFileDialog1.FileName;
                 }
                 catch (SecurityException ex)
@@ -36,11 +31,6 @@ namespace BlackBoxApp
                     $"Details:\n\n{ex.StackTrace}");
                 }
             }
-        }
-
-        private void SetText(string text)
-        {
-            textBox1.Text = text;
         }
 
         private string RemoveFileNameExtension(string fileName)
@@ -61,13 +51,25 @@ namespace BlackBoxApp
 
         private void EnableOrDisableItems()
         {
-            if (!string.IsNullOrEmpty(textBox1.Text))
+            if (!string.IsNullOrEmpty(textBoxDescription.Text) && openFileDialog1.CheckFileExists)
             {
                 btnAddFileAndDescription.Enabled = true;
+
             }
             else
             {
                 btnAddFileAndDescription.Enabled = false;
+            }
+
+            if (_blackBoxCandidates.Count > 0)
+            {
+                textBoxOutPutFileLocation.Enabled = true;
+                btnSaveFile.Enabled = true;
+            }
+            else
+            {
+                textBoxOutPutFileLocation.Enabled = false;
+                btnSaveFile.Enabled = false;
             }
         }
 
@@ -92,6 +94,11 @@ namespace BlackBoxApp
             bindingSource.DataSource = _blackBoxCandidates;
 
             dataGridView1.DataSource = bindingSource;
+            dataGridView1.Columns[0].Width = 100;
+            dataGridView1.Columns[0].HeaderText = "Description";
+            dataGridView1.Columns[1].HeaderText = "Image";
+
+            dataGridView1.AutoResizeColumns();
             dataGridView1.Refresh();
 
         }
@@ -102,9 +109,9 @@ namespace BlackBoxApp
             {
                 byte[] fileContent = BlackBoxGenerator.GetFileContentAsByteArray(openFileDialog1.FileName);
 
-                if (fileContent.Length > 0 && _blackBoxCandidates.TryAdd(textBox1.Text, fileContent))
+                if (fileContent.Length > 0 && _blackBoxCandidates.TryAdd(textBoxDescription.Text, fileContent))
                 {
-                    textBox1.Text = string.Empty;
+                    textBoxDescription.Text = string.Empty;
                     openFileDialog1.Reset();
                     openFileDialog1.FileName = string.Empty;
                     lblSelectedFile.Text = string.Empty;
@@ -164,6 +171,7 @@ namespace BlackBoxApp
                     _blackboxParser = new BlackboxParser(openFileDialogBlackboxLoad.FileName);
                     PopulateDescriptionsComboBox();
                     comboBoxDescriptions.Enabled = true;
+                    comboBoxDescriptions.Text = string.Empty;
                     buttonExtractImage.Enabled = true;
                 }
                 catch (SecurityException ex)

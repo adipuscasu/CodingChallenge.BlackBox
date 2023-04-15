@@ -36,7 +36,7 @@
             dataGridView1 = new DataGridView();
             button3 = new Button();
             label1 = new Label();
-            textBox1 = new TextBox();
+            textBoxDescription = new TextBox();
             btnSaveFile = new Button();
             btnAddFileAndDescription = new Button();
             tabPage2 = new TabPage();
@@ -62,10 +62,10 @@
             // 
             tabControl1.Controls.Add(tabPage1);
             tabControl1.Controls.Add(tabPage2);
-            tabControl1.Location = new Point(12, 33);
+            tabControl1.Location = new Point(1, 1);
             tabControl1.Name = "tabControl1";
             tabControl1.SelectedIndex = 0;
-            tabControl1.Size = new Size(703, 360);
+            tabControl1.Size = new Size(800, 371);
             tabControl1.TabIndex = 1;
             // 
             // tabPage1
@@ -76,13 +76,13 @@
             tabPage1.Controls.Add(dataGridView1);
             tabPage1.Controls.Add(button3);
             tabPage1.Controls.Add(label1);
-            tabPage1.Controls.Add(textBox1);
+            tabPage1.Controls.Add(textBoxDescription);
             tabPage1.Controls.Add(btnSaveFile);
             tabPage1.Controls.Add(btnAddFileAndDescription);
             tabPage1.Location = new Point(4, 24);
             tabPage1.Name = "tabPage1";
             tabPage1.Padding = new Padding(3);
-            tabPage1.Size = new Size(695, 332);
+            tabPage1.Size = new Size(792, 343);
             tabPage1.TabIndex = 0;
             tabPage1.Text = "Generate BlackBox";
             tabPage1.UseVisualStyleBackColor = true;
@@ -100,14 +100,14 @@
             // 
             textBoxOutPutFileLocation.Location = new Point(6, 297);
             textBoxOutPutFileLocation.Name = "textBoxOutPutFileLocation";
-            textBoxOutPutFileLocation.Size = new Size(417, 23);
+            textBoxOutPutFileLocation.Size = new Size(487, 23);
             textBoxOutPutFileLocation.TabIndex = 8;
             textBoxOutPutFileLocation.Text = "C:\\temp\\blackbox.dat";
             // 
             // lblSelectedFile
             // 
             lblSelectedFile.AutoSize = true;
-            lblSelectedFile.Location = new Point(17, 38);
+            lblSelectedFile.Location = new Point(3, 38);
             lblSelectedFile.Name = "lblSelectedFile";
             lblSelectedFile.Size = new Size(73, 15);
             lblSelectedFile.TabIndex = 7;
@@ -121,13 +121,13 @@
             dataGridView1.Name = "dataGridView1";
             dataGridView1.ReadOnly = true;
             dataGridView1.RowTemplate.Height = 25;
-            dataGridView1.Size = new Size(683, 150);
+            dataGridView1.Size = new Size(777, 209);
             dataGridView1.TabIndex = 6;
             dataGridView1.UserDeletedRow += dataGridView1_UserDeletedRow;
             // 
             // button3
             // 
-            button3.Location = new Point(258, 6);
+            button3.Location = new Point(7, 7);
             button3.Name = "button3";
             button3.Size = new Size(93, 27);
             button3.TabIndex = 5;
@@ -138,23 +138,23 @@
             // label1
             // 
             label1.AutoSize = true;
-            label1.Location = new Point(3, 12);
+            label1.Location = new Point(126, 12);
             label1.Name = "label1";
             label1.Size = new Size(87, 15);
             label1.TabIndex = 4;
             label1.Text = "File description";
             // 
-            // textBox1
+            // textBoxDescription
             // 
-            textBox1.Location = new Point(96, 9);
-            textBox1.Name = "textBox1";
-            textBox1.Size = new Size(147, 23);
-            textBox1.TabIndex = 3;
-            textBox1.TextChanged += textBox1_TextChanged;
+            textBoxDescription.Location = new Point(219, 9);
+            textBoxDescription.Name = "textBoxDescription";
+            textBoxDescription.Size = new Size(274, 23);
+            textBoxDescription.TabIndex = 3;
+            textBoxDescription.TextChanged += textBox1_TextChanged;
             // 
             // btnSaveFile
             // 
-            btnSaveFile.Location = new Point(429, 289);
+            btnSaveFile.Location = new Point(523, 289);
             btnSaveFile.Name = "btnSaveFile";
             btnSaveFile.Size = new Size(260, 37);
             btnSaveFile.TabIndex = 2;
@@ -164,7 +164,7 @@
             // 
             // btnAddFileAndDescription
             // 
-            btnAddFileAndDescription.Location = new Point(518, 6);
+            btnAddFileAndDescription.Location = new Point(612, 6);
             btnAddFileAndDescription.Name = "btnAddFileAndDescription";
             btnAddFileAndDescription.Size = new Size(171, 37);
             btnAddFileAndDescription.TabIndex = 0;
@@ -179,7 +179,7 @@
             tabPage2.Location = new Point(4, 24);
             tabPage2.Name = "tabPage2";
             tabPage2.Padding = new Padding(3);
-            tabPage2.Size = new Size(695, 332);
+            tabPage2.Size = new Size(792, 343);
             tabPage2.TabIndex = 1;
             tabPage2.Text = "Extract from BlackBox";
             tabPage2.UseVisualStyleBackColor = true;
@@ -191,24 +191,25 @@
             groupBoxExtract.Controls.Add(label4);
             groupBoxExtract.Location = new Point(6, 110);
             groupBoxExtract.Name = "groupBoxExtract";
-            groupBoxExtract.Size = new Size(683, 66);
+            groupBoxExtract.Size = new Size(777, 66);
             groupBoxExtract.TabIndex = 12;
             groupBoxExtract.TabStop = false;
             groupBoxExtract.Text = "Extract image by description";
             // 
             // comboBoxDescriptions
             // 
+            comboBoxDescriptions.DropDownStyle = ComboBoxStyle.DropDownList;
             comboBoxDescriptions.Enabled = false;
             comboBoxDescriptions.FormattingEnabled = true;
             comboBoxDescriptions.Location = new Point(151, 22);
             comboBoxDescriptions.Name = "comboBoxDescriptions";
-            comboBoxDescriptions.Size = new Size(327, 23);
+            comboBoxDescriptions.Size = new Size(441, 23);
             comboBoxDescriptions.TabIndex = 14;
             // 
             // buttonExtractImage
             // 
             buttonExtractImage.Enabled = false;
-            buttonExtractImage.Location = new Point(501, 22);
+            buttonExtractImage.Location = new Point(622, 22);
             buttonExtractImage.Name = "buttonExtractImage";
             buttonExtractImage.Size = new Size(149, 23);
             buttonExtractImage.TabIndex = 13;
@@ -231,7 +232,7 @@
             groupBoxLoadBlackbox.Controls.Add(button1);
             groupBoxLoadBlackbox.Location = new Point(6, 6);
             groupBoxLoadBlackbox.Name = "groupBoxLoadBlackbox";
-            groupBoxLoadBlackbox.Size = new Size(683, 98);
+            groupBoxLoadBlackbox.Size = new Size(777, 98);
             groupBoxLoadBlackbox.TabIndex = 11;
             groupBoxLoadBlackbox.TabStop = false;
             groupBoxLoadBlackbox.Text = "Load blackbox.dat file";
@@ -271,7 +272,7 @@
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(800, 450);
+            ClientSize = new Size(800, 373);
             Controls.Add(tabControl1);
             Name = "MainForm";
             Text = "Coding challenge";
@@ -296,7 +297,7 @@
         private Button btnAddFileAndDescription;
         private Button button3;
         private Label label1;
-        private TextBox textBox1;
+        private TextBox textBoxDescription;
         private Button btnSaveFile;
         private OpenFileDialog openFileDialog1;
         private DataGridView dataGridView1;
