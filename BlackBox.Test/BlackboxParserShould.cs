@@ -32,5 +32,16 @@ namespace BlackBox.Test
             mi.GetParameters().Should().NotBeNull();
 
         }
+
+        [Fact]
+        public void HaveAMethodNamedGetDescriptions()
+        {
+            // Arrange
+            System.Reflection.MethodInfo? mi = typeof(BlackboxParser).GetMethod("GetDescriptions");
+
+            // Assert
+            mi.Should().NotBeNull();
+            mi.IsPublic.Should().BeTrue();
+        }
     }
 }

@@ -1,5 +1,4 @@
-﻿using BlackBox.BusinessLogic.Extensions;
-using System.Text;
+﻿using System.Text;
 
 namespace BlackBox.BusinessLogic
 {
@@ -17,7 +16,9 @@ namespace BlackBox.BusinessLogic
 
             _fileName = fileName;
 
-            FillDictionary();
+            _blackBox.Clear();
+
+            BlackboxHelper.FillDictionary(_fileName, _blackBox);
         }
 
 
@@ -90,67 +91,6 @@ namespace BlackBox.BusinessLogic
                           select key);
 
             return list;
-        }
-
-        private void FillDictionary()
-        {
-            _blackBox.Clear();
-
-            using (FileStream fs = new FileStream(_fileName, FileMode.Open, FileAccess.Read))
-            {
-                byte[] buffer = new byte[fs.Length];
-                int bytesRead = fs.Read(buffer, 0, buffer.Length);
-                int imageCount = 0;
-                string description = string.Empty;
-
-                // Search for the "magic number" indicating the start of a JPEG image.
-                for (int i = 0; i < bytesRead - 1; i++)
-                {
-
-                    if (buffer[i] == 0xff && buffer[i + 1] == 0xd8)
-                    {
-                        // We found the start of a JPEG image.
-                        imageCount++;
-
-                        int k = i;
-                        // go back to the end of the previous image or the begining of the buffer
-                        while (k < bytesRead - 1 && k >= 1 && !(buffer[k] == 0xff && buffer[k + 1] == 0xd9))
-                        {
-                            k--;
-                        }
-                        k = k == 0 ? 0 : k + 2;
-                        description = Encoding.UTF8.GetString(buffer[k..i]);
-
-                        // Extract the image from the buffer.
-                        int imageStartIndex = i;
-                        while (i < bytesRead - 1 && !(buffer[i] == 0xff && buffer[i + 1] == 0xd9))
-                        {
-                            i++;
-                        }
-                        int imageEndIndex = i + 1;
-                        byte[] imageData = new byte[imageEndIndex - imageStartIndex + 1];
-
-                        Array.Copy(buffer, imageStartIndex, imageData, 0, imageData.Length);
-
-                        AddToDictionary(description, imageData);
-                    }
-                }
-            }
-        }
-
-        private void AddToDictionary(string description, byte[] imageData)
-        {
-            bool keyExists = _blackBox.TryGetValue(description, out _);
-            if (keyExists)
-            {
-                description = description.AppendRandomStringSuffix();
-            }
-
-            bool wasAdded = _blackBox.TryAdd(description, imageData);
-            if (!wasAdded)
-            {
-                throw new ApplicationException($"Could not add key {description}");
-            }
         }
     }
 }
